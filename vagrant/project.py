@@ -49,16 +49,16 @@ def editMenuItem(restaurant_id, menu_id):
         return render_template('editmenuitem.html', restaurant=restaurant_id, menu=menu_id, edited_item=editeditem)
 
 
-# @app.route('/restaurants/<int:restaurant_id>/<int:menu_id>/delete/', methods=['GET', 'POST'])
-# def deleteMenuItem(restaurant_id, menu_id):
-#    deleteditem = session.query(MenuItem).filter_by(id=menu_id).one()
-#    print deleteditem
-#    if request.form == 'POST':
-#        session.delete(deleteditem)
-#        session.commit()
-#        return redirect(url_for('restaurantMenu', restaurant=restaurant_id))
-#    else:
-#        return redirect(url_for('deleteditem.html', restaurant=restaurant_id, menu=menu_id, deleted_item=deleteditem.id))
+@app.route('/restaurants/<int:restaurant_id>/<int:menu_id>/delete/', methods=['GET', 'POST'])
+def deleteMenuItem(restaurant_id, menu_id):
+    deleteditem = session.query(MenuItem).filter_by(id=menu_id).one()
+    print deleteditem
+    if request.form == 'POST':
+        session.delete(deleteditem)
+        session.commit()
+        return redirect(url_for('restaurantMenu', restaurant=restaurant_id))
+    else:
+        return render_template('deleteditem.html', restaurant=restaurant_id, menu=menu_id, deleted_item=deleteditem.id)
 
 
 @app.route('/restaurants/<int:restaurant_id>/')
@@ -69,7 +69,6 @@ def restaurantMenu(restaurant_id):
     print (items)
     return render_template('menu.html', restaurant=restaurant, items=items)
 
-
 if __name__ == '__main__':
     app.debug = True
-    app.run(host='0.0.0.0.', port=8080)
+    app.run(host='0.0.0.0', port=8080)
