@@ -2,7 +2,7 @@ from sqlalchemy import create_engine
 from sqlalchemy.orm import sessionmaker
 from database_setup import Base, Restaurant, MenuItem
 
-from flask import Flask, render_template, request, redirect, url_for
+from flask import Flask, render_template, request, redirect, url_for, flash
 app = Flask(__name__)
 
 engine = create_engine('sqlite:///restaurantmenu.db')
@@ -18,6 +18,7 @@ def newMenuItem(restaurant_id):
         newItem = MenuItem(name=request.form['name'], restaurant_id=restaurant_id)
         session.add(newItem)
         session.commit()
+        flash("new menu item created")
         return redirect(url_for('restaurantMenu', restaurant_id=restaurant_id))
     else:
         return render_template('newmenuitem.html', blabla=restaurant_id)
@@ -42,23 +43,31 @@ def editMenuItem(restaurant_id, menu_id):
             editeditem.name = request.form['name']
         session.add(editeditem)
         session.commit()
+        flash("the item has been edited")
         return redirect(url_for('restaurantMenu', restaurant_id=restaurant_id))
     else:
-        print restaurant_id
-        print menu_id
+        restaurant_inf = session.query(Restaurant).filter_by(id=restaurant_id).one()
         return render_template('editmenuitem.html', restaurant=restaurant_id, menu=menu_id, edited_item=editeditem)
 
 
 @app.route('/restaurants/<int:restaurant_id>/<int:menu_id>/delete/', methods=['GET', 'POST'])
 def deleteMenuItem(restaurant_id, menu_id):
     deleteditem = session.query(MenuItem).filter_by(id=menu_id).one()
-    print deleteditem
-    if request.form == 'POST':
+    restaurant_inf = session.query(Restaurant).filter_by(id=restaurant_id).one()
+    #print restaurant_inf
+    #print "ok restaurant"
+    #print deleteditem
+    #print "OK deleted"
+    #print deleteditem.name
+    if request.method == 'POST':
         session.delete(deleteditem)
         session.commit()
-        return redirect(url_for('restaurantMenu', restaurant=restaurant_id))
+        flash("the item has been deleted")
+        return redirect(url_for('restaurantMenu', restaurant_id=restaurant_id))
     else:
-        return render_template('deleteditem.html', restaurant=restaurant_id, menu=menu_id, deleted_item=deleteditem.id)
+        #print restaurant_inf.name
+        #print deleteditem.name
+        return render_template('deleteditem.html', restaurant=restaurant_id, menu=menu_id, rest_name=restaurant_inf.name, deleted_item=deleteditem.name)
 
 
 @app.route('/restaurants/<int:restaurant_id>/')
@@ -70,5 +79,6 @@ def restaurantMenu(restaurant_id):
     return render_template('menu.html', restaurant=restaurant, items=items)
 
 if __name__ == '__main__':
+    app.secret_key = "secret_key"
     app.debug = True
     app.run(host='0.0.0.0', port=8080)
