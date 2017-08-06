@@ -34,7 +34,12 @@ def createNewResto():
 
 @app.route('/restos/<int:resto_id>/edit')
 def editResto(resto_id):
-    return 'Restaurant has been edited'
+    #return 'Restaurant has been edited'
+    res=restaurants[resto_id-1]
+    print res
+    name_resto=res['name']
+    print name_resto
+    return render_template('edit_menu_item.html', resto_identif=name_resto)
 
 
 @app.route('/restos/<int:resto_id>/delete')

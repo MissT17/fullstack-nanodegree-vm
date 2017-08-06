@@ -1,0 +1,10 @@
+<html>
+    <body>
+        <h1>Here is the list of all the restaurants avaiable in the database<h1>
+        <ul>
+        {% for resto in restos %}
+            <li>{{resto.name}} <a href='{{url_for('editResto', resto_id=resto.id)}}'>Edit</a></li>
+        </ul>
+        {% endfor %}
+    </body>   
+</html>
