@@ -1,9 +1,9 @@
 <html>
     <body>
-        <h1>Please enter the new name for {{name_resto}} in the field below:</h1>
-        <form action="{{url_for('editResto', resto_edit_id=resto_identif)}}" method = 'POST'>
-            <input type = 'text' size = '30' name = 'name'>
-            <input type = 'submit' value = 'Edit'>
-        </form>
+        <h1>Please enter the new name for {{item_name}} in the field below:</h1>
+            <form action="{{url_for('editMenuItems', resto_id=resto, item_id=item)}}" method ='POST'>
+                <input type = 'text' size = '30' name = 'name' placeholder='{{item_name}}'>
+                <input type = 'submit' value = 'Submit'>
+            </form>
     </body>    
 </html>

@@ -1,0 +1,8 @@
+<html>
+    <body>
+        <p>Please confirm the deletion of {{resto_name}} from he list of restaurants</p>
+        <form action='{{url_for('deleteResto', resto_id=resto)}}', method='POST'>
+            <input type='Submit' value='Confirm'>  <a href='{{url_for('showallrestaurants')}}'>Cancel</a>
+        </form>
+    </body>    
+</html>

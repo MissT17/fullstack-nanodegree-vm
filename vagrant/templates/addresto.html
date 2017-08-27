@@ -1,0 +1,12 @@
+<html>
+    <body>
+        <p>Please fill out the form below to add a new restaurant to list of restaurants:</p>
+        <form action='{{url_for('createNewResto')}}', method='POST'>
+                <p>Name:</p>
+                <input type='text' size='30' name='name'>    
+                <input type='submit' value='Add'>    
+        </form>
+        </br>
+        <p><a href='{{url_for('showallrestaurants')}}'>Come back to the list of all restaurants</a></p>    
+    </body>        
+</html>

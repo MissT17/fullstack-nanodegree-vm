@@ -1,10 +1,36 @@
 <html>
-    <body>
-        <h1>Here is the list of all the restaurants avaiable in the database<h1>
-        <ul>
-        {% for resto in restos %}
-            <li>{{resto.name}} <a href='{{url_for('editResto', resto_id=resto.id)}}'>Edit</a></li>
-        </ul>
-        {% endfor %}
-    </body>   
+<head>
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <link rel="stylesheet" type="text/css" href="/static/bootstrap-3.3.7-dist/css/bootstrap.min.css">
+    <link rel="stylesheet" type="text/css" href="/static/bootstrap-3.3.7-dist/css/custom.css">
+    <script src="/static/bootstrap-3.3.7-dist/js/jquery-1.11.3.min.js"></script>
+    <script src="/static/bootstrap-3.3.7-dist/js/bootstrap.min.js"></script>
+</head>  
+<body>
+    <div class="container">
+        <div class="row">
+            <div class="col-md-12"><h1>Here is the list of all the restaurants avaiable in the database</h1></div>
+        </div>
+        <div class="row">
+                <div class="col-sm-12 col-md-6 col-lg-4">Along with the numerous template engines, you might consider using Python's built in Template. It will give you basic templating functionality without needing to learn (or choose) a template library.</div>
+                <div class="col-sm-12 col-md-6 col-lg-4">Along with the numerous template engines, you might consider using Python's built in Template. It will give you basic templating functionality without needing to learn (or choose) a template library.</div>
+                <div class="clearfix visible-md-block"></div>
+                <div class="col-sm-12 col-md-6 col-lg-4">Along with the numerous template engines, you might consider using Python's built in Template. It will give you basic templating functionality without needing to learn (or choose) a template library.</div>
+        </div>
+        <div class="row">
+            <div class="col-md-12">
+                <div class="content_custom">
+                    {% for resto in restos %}
+                    <div class="col-md-4"><a class="btn btn-link" href='{{url_for('restoMenu', resto_ID=resto.id)}}' >{{resto.name}}</a>  <a class="btn btn-default" role="button" href='{{url_for('editResto', resto_id=resto.id)}}'>Edit</a> <a class="btn btn-default" role="button" href='{{url_for('deleteResto',resto_id=resto.id)}}'>Delete</a></div>
+                    {% endfor %}
+                </div>    
+            </div>
+        </div>                        
+        <div class="row">            
+                    <div class="col-md-12"><a href='{{url_for('createNewResto')}}' role ="button" class ="btn btn-default">Add a new restaurant</a></div>
+        </div>    
+    </div>
+</body>   
 </html>
